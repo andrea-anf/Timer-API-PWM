@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const mongoURI = 'mongodb+srv://baddasstimer:kfkuyXefVvQC6ClX@mycluster-a9m3y.mongodb.net/test?retryWrites=true&w=majority'; //connecting to ciphertrick
+const mongoURI = process.env.mongoURI; //connecting to ciphertrick
 const options = {
     keepAlive: true,
     keepAliveInitialDelay: 300000,
