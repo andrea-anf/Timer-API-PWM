@@ -63,11 +63,25 @@ router.get('/getAll/:id', (req, res) => {
 //ADD NEW SESSION TO USER
 router.post('/add', (req, res) => {
   var id = req.body._id;
+  var hour_start = parseHours(req.body.t_start.slice(0,2));
+  var mins_start = req.body.t_start.slice(3);
+
+  var hour_end = parseHours(req.body.t_end.slice(0,2));
+  var mins_end = (req.body.t_end.slice(3));
+
+  console.log(mins_start,mins_end);
+
+  var time_start = new Date();
+  time_start.setHours(hour_start,mins_start);
+
+  var time_end = new Date();
+  time_end.setHours(hour_end,mins_end);
+
   var session = {
     date: new Date(req.body.date),
     finished: true,
-    t_start: req.body.t_start,
-    t_end: req.body.t_end,
+    t_start: time_start,
+    t_end: time_end,
     tag: req.body.tag,
     note: req.body.note
   }
@@ -79,12 +93,12 @@ router.post('/add', (req, res) => {
     }
     res.status(200).json({
       request: {
-        type: 'GET',
+        type: 'POST',
         description:'Adding one session to user '+result._id
       },
       user: {
-        ID: result._id,
-        NEW_SESSION: {
+        _id: result._id,
+        new_session: {
           date: session.date,
           finished: session.finished,
           t_start: session.t_start,
@@ -106,7 +120,11 @@ router.post('/add', (req, res) => {
 
   module.exports = router;
 
-
+function parseHours(hour){
+  var num_hour = parseInt(hour,10)
+  num_hour= num_hour+2;
+  return hour= Number(num_hour);
+}
 // SHOW user's sessions from date-x to date-y
 
 // router.post('/sessions/from-to', (req, res, next) => {
