@@ -10,7 +10,19 @@ const User = require('../models/user');
 //   var id = req.body._id;
 //   var start = req.body.t_start;
 //   User
-//   .findOne( {_id: id})
+// //   .aggregate([
+// //     // Get just the docs that contain a shapes element where color is 'red'
+// //     {$match: {'sessins.finished': true}},
+// //     {$project: {
+// //         sessions: {$filter: {
+// //             input: '$sessions',
+// //             as: 'session',
+// //             cond: {$eq: ['$$sessions.', 'red']}
+// //         }},
+// //         _id: 0
+// //     }}
+// // ])
+//   .findOne({_id:id}, {sessions: {$elemMatch: {finished: false}}})
 //   .then(result => {
 //     if(!result){
 //       return res.status(404).send({ message: 'User not found' })
@@ -48,8 +60,8 @@ router.get('/getAll/:id', (req, res) => {
         DESCRIPTION:'Showing sessions'
       },
       user: {
-        ID: result._id,
-        SESSIONS: result.sessions
+        _id: result._id,
+        sessions: result.sessions
       }
     });
   })
@@ -79,7 +91,7 @@ router.post('/add', (req, res) => {
 
   var session = {
     date: new Date(req.body.date),
-    finished: true,
+    finished: req.body.finished,
     t_start: time_start,
     t_end: time_end,
     tag: req.body.tag,
