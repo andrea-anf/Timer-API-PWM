@@ -6,7 +6,7 @@ const User = require('../models/user');
 
 
 //GET USER'S SESSION BY DAY--@@@@@@@@@@@@@@@@@@@@@@@
-router.get('/getByDay', (req, res) => {
+router.post('/getByDay', (req, res) => {
   var id = req.body._id;
   var date = req.body.date;
   User
@@ -26,7 +26,7 @@ router.get('/getByDay', (req, res) => {
     }
     res.status(200).json({
       request: {
-        type: 'GET',
+        type: 'POST',
         description:'Showing sessions by day'
       },
       user: {
