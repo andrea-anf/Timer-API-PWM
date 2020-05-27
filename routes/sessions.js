@@ -26,8 +26,8 @@ router.get('/getByDay', (req, res) => {
     }
     res.status(200).json({
       request: {
-        TYPE: 'GET',
-        DESCRIPTION:'Showing sessions by day'
+        type: 'GET',
+        description:'Showing sessions by day'
       },
       user: {
         _id: result[0]._id,
@@ -102,30 +102,30 @@ router.post('/add', (req, res) => {
   });
 });
 
-// //GET ALL USER'S SESSIONS--@@@@@@@@@@@@@@@@@@@@@@@
-// router.get('/getAll/:id', (req, res) => {
-//   User
-//   .findById(req.params.id)
-//   .then(result => {
-//     if(!result){
-//       return res.status(404).send({ message: 'User not found' })
-//     }
-//     res.status(200).json({
-//       request: {
-//         TYPE: 'GET',
-//         DESCRIPTION:'Showing sessions'
-//       },
-//       user: {
-//         _id: result._id,
-//         sessions: result.sessions
-//       }
-//     });
-//   })
-//   .catch(err => {
-//     console.log(err);
-//     res.status(500).json({ error : "Error searching for user: "+ req.params.id });
-//   });
-// });
+//GET ALL USER'S SESSIONS--@@@@@@@@@@@@@@@@@@@@@@@
+router.get('/getAll/:id', (req, res) => {
+  User
+  .findById(req.params.id)
+  .then(result => {
+    if(!result){
+      return res.status(404).send({ message: 'User not found' })
+    }
+    res.status(200).json({
+      request: {
+        TYPE: 'GET',
+        DESCRIPTION:'Showing sessions'
+      },
+      user: {
+        _id: result._id,
+        sessions: result.sessions
+      }
+    });
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json({ error : "Error searching for user: "+ req.params.id });
+  });
+});
 
 function parseHours(hour){
   var num_hour = parseInt(hour,10)
