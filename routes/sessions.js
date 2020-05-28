@@ -48,25 +48,11 @@ router.post('/getByDay', (req, res) => {
 //ADD NEW SESSION TO USER
 router.post('/add', (req, res) => {
   var id = req.body._id;
-  var hour_start = parseHours(req.body.t_start.slice(0,2));
-  var mins_start = req.body.t_start.slice(3);
-
-  var hour_end = parseHours(req.body.t_end.slice(0,2));
-  var mins_end = (req.body.t_end.slice(3));
-
-  console.log(mins_start,mins_end);
-
-  var time_start = new Date();
-  time_start.setHours(hour_start,mins_start);
-
-  var time_end = new Date();
-  time_end.setHours(hour_end,mins_end);
-
   var session = {
     date: new Date(req.body.date),
     finished: req.body.finished,
-    t_start: time_start,
-    t_end: time_end,
+    t_start: req.body.t_start,
+    t_end: req.body.t_end,
     tag: req.body.tag,
     note: req.body.note
   }
@@ -134,3 +120,26 @@ function parseHours(hour){
 }
 
 module.exports = router;
+
+// var hour_start = parseHours(req.body.t_start.slice(0,2));
+// var mins_start = req.body.t_start.slice(3);
+
+// var hour_end = parseHours(req.body.t_end.slice(0,2));
+// var mins_end = (req.body.t_end.slice(3));
+
+// console.log(mins_start,mins_end);
+
+// var time_start = new Date();
+// time_start.setHours(hour_start,mins_start);
+
+// var time_end = new Date();
+// time_end.setHours(hour_end,mins_end);
+
+// var session = {
+//   date: new Date(req.body.date),
+//   finished: req.body.finished,
+//   t_start: time_start,
+//   t_end: time_end,
+//   tag: req.body.tag,
+//   note: req.body.note
+// }
